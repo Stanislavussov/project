@@ -1,26 +1,83 @@
 "use strict";
-const arr = [55, 84, 91, 10, 2];
 
-arr.sort(compareNum);
-console.log(arr);
+// function copyFunc (myObj){
+//     const copyObj = {};
 
-function compareNum(a, b) {
-    return a - b;
+//     for (let key in myObj){
+//         copyObj[key] = myObj[key];
+//     }
+
+//     return copyObj;
+// }
+
+
+// const numbers = {
+//     a: 2,
+//     b: 5,
+//     c: {
+//         x: 7,
+//         y: 4
+//     }
+// };
+
+// const newNumbers = copyFunc(numbers);
+
+// newNumbers.a = 10;
+
+// console.log(newNumbers);
+
+
+
+// function copy(mainObj){
+//     let objCopy = {};
+
+//     let key;
+//     for (key in mainObj){
+//         objCopy[key] = mainObj[key];
+//     }
+
+//     return objCopy;
+// }
+
+
+
+// console.log(newNumbers);
+// console.log(numbers);
+
+// const add = {
+//     d: 11,
+//     e: 22
+// };
+
+// const together = Object.assign({}, add);
+
+// together.d = 66;
+
+// console.log(add);
+// console.log(together);
+
+
+
+const oldArray = ['a', 'b', 'c'];
+const newArray = oldArray.slice();
+
+newArray[1] = 'abcd';
+
+console.log(newArray);
+
+console.log(oldArray);
+
+const video = ['youtube', 'vimeo', 'rutube', 'myvideo'],
+      blogs = ['wordpress', 'lj', 'blogger'],
+      internet = [...video, ...blogs, 'vk', 'fb'];
+
+console.log(internet);
+
+function logg (a, b, c){
+    console.log(a);
+    console.log(b);
+    console.log(c);
 }
 
-// arr.forEach(function(item, i, arr){
-//     console.log(`${i}: ${item} в массиве ${arr}`);
-// });
-
-// for (let i = 0; i < arr.length; i++){
-//     console.log(arr[i]);
-// }
-
-// for (let value of arr){
-//     console.log(value);
-// }
-
-// const str = prompt('', '');
-// const products = str.split(', ');
-// products.sort();
-// console.log(products.join('; '));
+const numb = [2, 3, 5];
+logg(...numb);
