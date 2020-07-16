@@ -1,115 +1,41 @@
-/* Задания на урок:
-1) Реализовать функционал, что после заполнения формы и нажатия кнопки "Подтвердить" - 
-новый фильм добавляется в список. Страница не должна перезагружаться.
-Новый фильм должен добавляться в movieDB.movies.
-Для получения доступа к значению input - обращаемся к нему как input.value;
-P.S. Здесь есть несколько вариантов решения задачи, принимается любой, но рабочий.
+window.addEventListener('DOMContentLoaded', function() {
 
-2) Если название фильма больше, чем 21 символ - обрезать его и добавить три точки
-
-3) При клике на мусорную корзину - элемент будет удаляться из списка (сложно)
-
-4) Если в форме стоит галочка "Сделать любимым" - в консоль вывести сообщение: 
-
-"Добавляем любимый фильм"
-*/
-
-
-'use strict';
-
-document.addEventListener('DOMContentLoaded', () =>{
+    // Tabs
     
-    const movieDB = {
-        movies: [
-            "Логан",
-            "Лига справедливости",
-            "Ла-ла лэнд",
-            "Одержимость",
-            "Скотт Пилигрим против..."
-        ]
-    };
+	let tabs = document.querySelectorAll('.tabheader__item'),
+		tabsContent = document.querySelectorAll('.tabcontent'),
+		tabsParent = document.querySelector('.tabheader__items');
 
-
-    const ads = document.querySelectorAll('.promo__adv img'),
-        poster = document.querySelector('.promo__bg'),
-        genre = poster.querySelector('.promo__genre'),
-        movieList = document.querySelector('.promo__interactive-list'),
-        addForm = document.querySelector('form.add'),
-        addInput = addForm.querySelector('.adding__input'),
-        checkbox = addForm.querySelector('[type="checkbox"]');
+	function hideTabContent() {
         
-        addForm.addEventListener('submit', (event) => {
-            event.preventDefault();
-
-            let newFilm = addInput.value;
-            const favorite = checkbox.cheked;
-
-            if (newFilm) {
-               
-                if (newFilm.length > 21){
-                    newFilm = `${newFilm.substring(0, 22)}...`;
-                }
-
-                if (newFilm){
-                    console.log("Добавляем новый фильм");
-                }
-
-                movieDB.movies.push(newFilm);
-            
-                sortArr(movieDB.movies);
-            
-                createMovieList(movieDB.movies, movieList);
-
-            }
-
-            event.target.reset();
+        tabsContent.forEach(item => {
+            item.classList.add('hide');
+            item.classList.remove('show', 'fade');
         });
 
-
-    const deleteAdv = (arr) =>{
-        arr.forEach( e => {
-            e.remove();
+        tabs.forEach(item => {
+            item.classList.remove('tabheader__item_active');
         });
-    };
+	}
 
-
-    const makeChanges = () => {
-        genre.textContent = 'драма';
-    
-        poster.style.backgroundImage = 'url("img/bg.jpg")';
-    };
-
-
-    function createMovieList(films, parent){
-        parent.innerHTML = "";
-
-        sortArr(films);
-
-        films.forEach((film, i) => {
-            parent.innerHTML +=
-            `<li class="promo__interactive-item">${i + 1} ${film}
-                    <div class="delete"></div>
-            </li>`;
-        
-        });
-
-        document.querySelectorAll('.delete').forEach((btn, i) => {
-            btn.addEventListener('click', () => {
-                btn.parentElement.remove();
-                movieDB.movies.splice(i, 1);
-
-                createMovieList(films, parent);
-            });
-        });
-
+	function showTabContent(i = 0) {
+        tabsContent[i].classList.add('show', 'fade');
+        tabsContent[i].classList.remove('hide');
+        tabs[i].classList.add('tabheader__item_active');
     }
+    
+    hideTabContent();
+    showTabContent();
 
-    const sortArr = (arr) => {
-        arr.sort();
-    };
-
-    createMovieList(movieDB.movies, movieList);
-    deleteAdv(ads);  
-    makeChanges();
-
+	tabsParent.addEventListener('click', function(event) {
+		const target = event.target;
+		if(target && target.classList.contains('tabheader__item')) {
+            tabs.forEach((item, i) => {
+                if (target == item) {
+                    hideTabContent();
+                    showTabContent(i);
+                }
+            });
+		}
+	});
 });
